@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{AEB0A725-114B-45B9-86E4-2E062E22DE6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcMovie", "MvcMovie\MvcMovie.csproj", "{C713AF33-D714-403A-BEF4-78CA7C568DE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity", "ContosoUniversity\ContosoUniversity.csproj", "{C2A104D5-AFA8-49F2-91D2-6FC3B5F6A439}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{AEB0A725-114B-45B9-86E4-2E062E22DE6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEB0A725-114B-45B9-86E4-2E062E22DE6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEB0A725-114B-45B9-86E4-2E062E22DE6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C713AF33-D714-403A-BEF4-78CA7C568DE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C713AF33-D714-403A-BEF4-78CA7C568DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C713AF33-D714-403A-BEF4-78CA7C568DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C713AF33-D714-403A-BEF4-78CA7C568DE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A104D5-AFA8-49F2-91D2-6FC3B5F6A439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A104D5-AFA8-49F2-91D2-6FC3B5F6A439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A104D5-AFA8-49F2-91D2-6FC3B5F6A439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A104D5-AFA8-49F2-91D2-6FC3B5F6A439}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

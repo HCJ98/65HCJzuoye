@@ -14,8 +14,12 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             EmployeeListViewModel empListModel = new EmployeeListViewModel();
+            //实例化员工信息业务层
+            EmployeeBusinessLayer empBL = new EmployeeBusinessLayer();
+            //员工原始数据列表，获取来自业务层类的数据
+            var listEmp = empBL.GetEmployeeList();
             //获取将处理过的数据列表
-            empListModel.EmployeeViewList =getEmpVmList();
+            empListModel.EmployeeViewList =getEmpVmList(listEmp);
             // 获取问候语
             empListModel.Greeting = getGreeting();
             //获取用户名
@@ -23,69 +27,67 @@ namespace WebApplication1.Controllers
             //将数据送往视图
             return View(empListModel);
         }
+        //Add
         public ActionResult AddNew() {
             return View("CreateEmployee");
         }
+        //Add
         public ActionResult Save(Employee emp)
         {
-            EmployeeBusinessLayer ebl = new EmployeeBusinessLayer();
-            ebl.Add(emp);
-            return new RedirectResult("index");
-        }
 
-        public ActionResult Search(string name)
-        {
-            EmployeeBusinessLayer ebl = new EmployeeBusinessLayer();
-            var queryResult = ebl.Search(name);
-            return View(queryResult);
-        }
+            EmployeeBusinessLayer empL = new EmployeeBusinessLayer();
+            empL.Add(emp);
 
-        //接收参数（）
-        [HttpPost]
-        public ActionResult CreateEmployee(Employee emp)
-        {
-            EmployeeBusinessLayer ebl = new EmployeeBusinessLayer();
-            ebl.Add(emp);
-            return RedirectToAction("index");
+            return new RedirectResult("/employee/index");
         }
-
-        //编辑功能键
-        public ActionResult Edit(int id)
+        //Delete
+        public ActionResult DeleteNew(int id)
         {
-            EmployeeBusinessLayer ebl = new EmployeeBusinessLayer();
-            Employee emp = ebl.Query(id);
+
+            
+            EmployeeBusinessLayer empL = new EmployeeBusinessLayer();     
+            empL.Delete(id);
+            return new RedirectResult("/employee/index");
+        }
+        //Update
+        public ActionResult UpdateNew(int id)
+        {
+            EmployeeBusinessLayer empL = new EmployeeBusinessLayer();
+            Employee emp = empL.Query(id);
             return View(emp);
+            // return View("UpdateEmployee");
         }
-
-        [HttpPost]
-
-        public ActionResult Edit(Employee emp)
+        //Update
+        public ActionResult Update(Employee emp)
         {
-            EmployeeBusinessLayer ebl = new EmployeeBusinessLayer();
-            ebl.Update(emp);
-            return RedirectToAction("index");
+           // ViewBag.id = id;         
+           EmployeeBusinessLayer empL = new EmployeeBusinessLayer();
+                    
+            empL.Update(emp);
+            return new RedirectResult("/employee/index");
         }
-
-        //删除键功能
-        public ActionResult Delete(int id)
+        //Select 根据Name进行模糊查找 显示查找到到Name和工资
+        public ActionResult Select(string name)
         {
+            EmployeeBusinessLayer empL = new EmployeeBusinessLayer();
+            var query = empL.Select(name);
 
-            EmployeeBusinessLayer empBL = new EmployeeBusinessLayer();
-            empBL.Delete(id);
-            return RedirectToAction("index");
-           
+            EmployeeListViewModel empListModel = new EmployeeListViewModel();
+            //获取将处理过的数据列表
+            empListModel.EmployeeViewList = getEmpVmList(query.ToList());
+            // 获取问候语
+            empListModel.Greeting = getGreeting();
+            //获取用户名
+            empListModel.UserName = getUserName();
+            return View("index",empListModel);
         }
-
-        //查询键功能
-        //public ActionResult query
-
         [NonAction]
-        List<EmployeeViewModel> getEmpVmList()
+        List<EmployeeViewModel> getEmpVmList(List<Employee>listEmp)
         {
             //实例化员工信息业务层
-            EmployeeBusinessLayer empBL = new EmployeeBusinessLayer();
+            //EmployeeBusinessLayer empBL = new EmployeeBusinessLayer();
             //员工原始数据列表，获取来自业务层类的数据
-            var listEmp = empBL.GetEmployeeList();
+            //var listEmp = empBL.GetEmployeeList();
             //员工原始数据加工后的视图数据列表，当前状态是空的
             var listEmpVm = new List<EmployeeViewModel>();
 
@@ -93,8 +95,8 @@ namespace WebApplication1.Controllers
             foreach (var item in listEmp)
             {
                 EmployeeViewModel empVmObj = new EmployeeViewModel();
-                empVmObj.EmployeeId = item.EmployeeID;
                 empVmObj.EmployeeName = item.Name;
+                empVmObj.EmployeeId = item.EmployeeID;
                 empVmObj.EmployeeSalary = item.Salary.ToString("C");
                 if (item.Salary > 10000)
                 {
@@ -102,7 +104,7 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                    empVmObj.EmployeeGrade = "土鳖";
+                    empVmObj.EmployeeGrade = "平民";
                 }
 
                 listEmpVm.Add(empVmObj);
@@ -112,7 +114,7 @@ namespace WebApplication1.Controllers
 
         }
 
-        //问候语
+
         [NonAction]
         string getGreeting()
         {
@@ -133,11 +135,11 @@ namespace WebApplication1.Controllers
             return greeting;
         }
 
-        //用户名
+
         [NonAction]
         string getUserName()
         {
-            return "G丶sny灬HCJ";
+            return "Admin";
         }
     }
 }
